@@ -156,7 +156,9 @@ export default function EnemyCategoryWrapper() {
         {categories.data.map((category) => {
           const categoryEnemies = enemiesByCategory[category.id] || []
           const { checked, indeterminate } = getCategoryCheckState(category.id)
-          const checkedCount = categoryEnemies.filter((enemy) => checkedEnemies.includes(enemy.id)).length
+          const checkedCount = categoryEnemies.filter((enemy) =>
+            checkedEnemies.includes(enemy.id),
+          ).length
 
           return (
             <EnemyCategoryItem
