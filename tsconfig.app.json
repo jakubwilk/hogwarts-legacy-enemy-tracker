@@ -27,9 +27,12 @@
     "baseUrl": ".",
     "paths": {
       "app/*": ["src/app/*"],
+      "api": ["src/api"],
       "assets/*": ["src/assets/*"],
       "lang/*": ["src/lang/*"],
-      "header": ["src/components/header"]
+      "models": ["src/models"],
+      "header": ["src/components/header"],
+      "content": ["src/components/content"]
     }
   },
   "include": ["src"]
