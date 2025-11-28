@@ -1,3 +1,11 @@
 {
-  "welcome": "Welcome to the app"
+  "header": {
+    "title": "Hogwarts Legacy Enemy Tracker",
+    "description": "Track your enemies in Hogwarts Legacy",
+    "logo": "Hogwarts Legacy Logo",
+    "menu": {
+      "language": "Language",
+      "theme": "Theme"
+    }
+  }
 }
