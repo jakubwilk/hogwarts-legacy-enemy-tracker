@@ -1,6 +1,6 @@
 import { Accordion, Loader, Text, useMantineColorScheme } from '@mantine/core'
 import { useGetCategoriesQuery, useGetEnemiesQuery } from 'api'
-import { useCallback, useEffect, useMemo, useState } from 'react'
+import { useEffect, useMemo, useState } from 'react'
 import { useTranslation } from 'react-i18next'
 
 import EnemyCategoryItem from './EnemyCategoryItem'
@@ -16,7 +16,7 @@ export default function EnemyCategoryWrapper() {
   const { data: enemies, isLoading: isLoadingEnemies } = useGetEnemiesQuery()
 
   const [openedCategories, setOpenedCategories] = useState<string[]>([])
-  const [checkedEnemies, setCheckedEnemies] = useState<Set<number>>(new Set())
+  const [checkedEnemies, setCheckedEnemies] = useState<number[]>([])
 
   const isLoading = useMemo(
     () => isLoadingCategories || isLoadingEnemies,
@@ -61,7 +61,7 @@ export default function EnemyCategoryWrapper() {
     if (savedChecked) {
       try {
         const parsed = JSON.parse(savedChecked)
-        setCheckedEnemies(new Set(parsed))
+        setCheckedEnemies(parsed)
       } catch (error) {
         console.error('Failed to parse saved checked enemies:', error)
       }
@@ -75,54 +75,55 @@ export default function EnemyCategoryWrapper() {
   }, [openedCategories])
 
   useEffect(() => {
-    localStorage.setItem(STORAGE_KEY_CHECKED, JSON.stringify(Array.from(checkedEnemies)))
+    localStorage.setItem(STORAGE_KEY_CHECKED, JSON.stringify(checkedEnemies))
   }, [checkedEnemies])
 
-  const toggleEnemy = useCallback((enemyId: number) => {
+  const accordionStyles = useMemo(
+    () => ({
+      item: {
+        backgroundColor:
+          colorScheme === 'dark' ? 'var(--mantine-color-dark-7)' : 'var(--mantine-color-gray-1)',
+        border: colorScheme === 'dark' ? '1px solid var(--mantine-color-dark-4)' : undefined,
+      },
+    }),
+    [colorScheme],
+  )
+
+  const toggleEnemy = (enemyId: number) => {
     setCheckedEnemies((prev) => {
-      const newSet = new Set(prev)
-      if (newSet.has(enemyId)) {
-        newSet.delete(enemyId)
+      if (prev.includes(enemyId)) {
+        return prev.filter((id) => id !== enemyId)
       } else {
-        newSet.add(enemyId)
+        return [...prev, enemyId]
       }
-      return newSet
     })
-  }, [])
+  }
 
-  const toggleCategory = useCallback(
-    (categoryId: number) => {
-      const categoryEnemies = enemiesByCategory[categoryId] || []
-      const allChecked = categoryEnemies.every((enemy) => checkedEnemies.has(enemy.id))
+  const toggleCategory = (categoryId: number) => {
+    const categoryEnemies = enemiesByCategory[categoryId] || []
+    const allChecked = categoryEnemies.every((enemy) => checkedEnemies.includes(enemy.id))
 
-      setCheckedEnemies((prev) => {
-        const newSet = new Set(prev)
-        categoryEnemies.forEach((enemy) => {
-          if (allChecked) {
-            newSet.delete(enemy.id)
-          } else {
-            newSet.add(enemy.id)
-          }
-        })
-        return newSet
-      })
-    },
-    [enemiesByCategory, checkedEnemies],
-  )
-
-  const getCategoryCheckState = useCallback(
-    (categoryId: number) => {
-      const categoryEnemies = enemiesByCategory[categoryId] || []
-      if (categoryEnemies.length === 0) return { checked: false, indeterminate: false }
-
-      const checkedCount = categoryEnemies.filter((enemy) => checkedEnemies.has(enemy.id)).length
-      return {
-        checked: checkedCount === categoryEnemies.length,
-        indeterminate: checkedCount > 0 && checkedCount < categoryEnemies.length,
+    setCheckedEnemies((prev) => {
+      if (allChecked) {
+        return prev.filter((id) => !categoryEnemies.some((enemy) => enemy.id === id))
+      } else {
+        const newIds = categoryEnemies.map((enemy) => enemy.id)
+        const existingIds = prev.filter((id) => !newIds.includes(id))
+        return [...existingIds, ...newIds]
       }
-    },
-    [enemiesByCategory, checkedEnemies],
-  )
+    })
+  }
+
+  const getCategoryCheckState = (categoryId: number) => {
+    const categoryEnemies = enemiesByCategory[categoryId] || []
+    if (categoryEnemies.length === 0) return { checked: false, indeterminate: false }
+
+    const checkedCount = categoryEnemies.filter((enemy) => checkedEnemies.includes(enemy.id)).length
+    return {
+      checked: checkedCount === categoryEnemies.length,
+      indeterminate: checkedCount > 0 && checkedCount < categoryEnemies.length,
+    }
+  }
 
   if (isLoading) {
     return (
@@ -141,17 +142,6 @@ export default function EnemyCategoryWrapper() {
     )
   }
 
-  const accordionStyles = useMemo(
-    () => ({
-      item: {
-        backgroundColor:
-          colorScheme === 'dark' ? 'var(--mantine-color-dark-7)' : 'var(--mantine-color-gray-1)',
-        border: colorScheme === 'dark' ? '1px solid var(--mantine-color-dark-4)' : undefined,
-      },
-    }),
-    [colorScheme],
-  )
-
   return (
     <div className='mt-8'>
       <Accordion
@@ -166,6 +156,7 @@ export default function EnemyCategoryWrapper() {
         {categories.data.map((category) => {
           const categoryEnemies = enemiesByCategory[category.id] || []
           const { checked, indeterminate } = getCategoryCheckState(category.id)
+          const checkedCount = categoryEnemies.filter((enemy) => checkedEnemies.includes(enemy.id)).length
 
           return (
             <EnemyCategoryItem
@@ -173,6 +164,7 @@ export default function EnemyCategoryWrapper() {
               category={category}
               enemies={categoryEnemies}
               checkedEnemies={checkedEnemies}
+              checkedCount={checkedCount}
               checked={checked}
               indeterminate={indeterminate}
               onToggleCategory={toggleCategory}

@@ -1,5 +1,4 @@
 import { Accordion, Checkbox, Text } from '@mantine/core'
-import { memo, useMemo } from 'react'
 import { useTranslation } from 'react-i18next'
 
 import type { IEnemyCategory, IEnemyEntry } from 'models'
@@ -9,28 +8,25 @@ import EnemyItem from './EnemyItem'
 interface EnemyCategoryItemProps {
   category: IEnemyCategory
   enemies: IEnemyEntry[]
-  checkedEnemies: Set<number>
+  checkedEnemies: number[]
+  checkedCount: number
   checked: boolean
   indeterminate: boolean
   onToggleCategory: (categoryId: number) => void
   onToggleEnemy: (enemyId: number) => void
 }
 
-function EnemyCategoryItem({
+export default function EnemyCategoryItem({
   category,
   enemies,
   checkedEnemies,
+  checkedCount,
   checked,
   indeterminate,
   onToggleCategory,
   onToggleEnemy,
 }: EnemyCategoryItemProps) {
   const { t } = useTranslation()
-
-  const checkedCount = useMemo(
-    () => enemies.filter((enemy) => checkedEnemies.has(enemy.id)).length,
-    [enemies, checkedEnemies],
-  )
 
   return (
     <Accordion.Item value={category.id.toString()}>
@@ -62,7 +58,7 @@ function EnemyCategoryItem({
               <EnemyItem
                 key={enemy.id}
                 enemy={enemy}
-                checked={checkedEnemies.has(enemy.id)}
+                checked={checkedEnemies.includes(enemy.id)}
                 onToggle={onToggleEnemy}
               />
             ))}
@@ -72,5 +68,3 @@ function EnemyCategoryItem({
     </Accordion.Item>
   )
 }
-
-export default memo(EnemyCategoryItem)

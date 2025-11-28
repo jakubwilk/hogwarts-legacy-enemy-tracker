@@ -1,5 +1,4 @@
 import { Checkbox, Text } from '@mantine/core'
-import { memo } from 'react'
 import { useTranslation } from 'react-i18next'
 
 import type { IEnemyEntry } from 'models'
@@ -10,7 +9,7 @@ interface EnemyItemProps {
   onToggle: (enemyId: number) => void
 }
 
-function EnemyItem({ enemy, checked, onToggle }: EnemyItemProps) {
+export default function EnemyItem({ enemy, checked, onToggle }: EnemyItemProps) {
   const { t } = useTranslation()
 
   return (
@@ -35,5 +34,3 @@ function EnemyItem({ enemy, checked, onToggle }: EnemyItemProps) {
     </div>
   )
 }
-
-export default memo(EnemyItem)

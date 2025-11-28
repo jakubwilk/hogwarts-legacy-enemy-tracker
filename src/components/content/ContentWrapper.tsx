@@ -1,10 +1,9 @@
 import { Card, Text } from '@mantine/core'
 import { IconAward } from '@tabler/icons-react'
-import { useMemo } from 'react'
 import { EnemyCategoryWrapper } from './enemy'
 
 export default function ContentWrapper() {
-  const achievementName = useMemo(() => 'Finishing Touches', [])
+  const achievementName = 'Finishing Touches'
 
   return (
     <div className='container mx-auto'>
