@@ -7,5 +7,71 @@
       "language": "Język",
       "theme": "Motyw"
     }
+  },
+  "errors": {
+    "400": {
+      "title": "Nieprawidłowe żądanie",
+      "message": "Żądanie było nieprawidłowe. Sprawdź wprowadzone dane."
+    },
+    "401": {
+      "title": "Brak autoryzacji",
+      "message": "Nie masz uprawnień do dostępu do tego zasobu."
+    },
+    "403": {
+      "title": "Dostęp zabroniony",
+      "message": "Nie masz uprawnień do dostępu do tego zasobu."
+    },
+    "404": {
+      "title": "Nie znaleziono",
+      "message": "Żądany zasób nie został znaleziony."
+    },
+    "500": {
+      "title": "Błąd serwera",
+      "message": "Wystąpił wewnętrzny błąd serwera. Spróbuj ponownie później."
+    },
+    "503": {
+      "title": "Usługa niedostępna",
+      "message": "Usługa jest tymczasowo niedostępna. Spróbuj ponownie później."
+    },
+    "network": {
+      "title": "Błąd sieci",
+      "message": "Nie można połączyć się z serwerem. Sprawdź połączenie internetowe."
+    },
+    "request": {
+      "title": "Błąd żądania",
+      "message": "Nie udało się wysłać żądania."
+    },
+    "default": {
+      "title": "Błąd",
+      "message": "Wystąpił błąd podczas przetwarzania żądania."
+    },
+    "unexpected": {
+      "title": "Błąd",
+      "message": "Wystąpił nieoczekiwany błąd"
+    }
+  },
+  "enemy": {
+    "loading": "Ładowanie kategorii i wrogów...",
+    "noEnemies": "Brak wrogów w tej kategorii",
+    "category": {
+      "loyalists": "Lojaliści",
+      "ashwinders": "Popielniki",
+      "poachers": "Kłusownicy",
+      "trolls": "Trolle",
+      "dugbogs": "Bagniki",
+      "thornbacks": "Kolczakoraki",
+      "venomouses": "Jadowite pająki",
+      "mongrels": "Kundele",
+      "others": "Inne"
+    },
+    "name": {
+      "loyalists": {
+        "assassin": "Lojalistyczny zabójca",
+        "commander": "Lojalistyczny dowódca",
+        "ranger": "Lojalistyczny łowca",
+        "sentinel": "Lojalistyczny strażnik",
+        "warrior": "Lojalistyczny wojownik"
+      }
+    }
   }
 }

@@ -7,5 +7,71 @@
       "language": "Language",
       "theme": "Theme"
     }
+  },
+  "errors": {
+    "400": {
+      "title": "Bad Request",
+      "message": "The request was invalid. Please check your data."
+    },
+    "401": {
+      "title": "Unauthorized",
+      "message": "You are not authorized to access this resource."
+    },
+    "403": {
+      "title": "Forbidden",
+      "message": "You do not have permission to access this resource."
+    },
+    "404": {
+      "title": "Not Found",
+      "message": "The requested resource was not found."
+    },
+    "500": {
+      "title": "Server Error",
+      "message": "An internal server error occurred. Please try again later."
+    },
+    "503": {
+      "title": "Service Unavailable",
+      "message": "The service is temporarily unavailable. Please try again later."
+    },
+    "network": {
+      "title": "Network Error",
+      "message": "Unable to connect to the server. Please check your internet connection."
+    },
+    "request": {
+      "title": "Request Error",
+      "message": "Failed to send the request."
+    },
+    "default": {
+      "title": "Error",
+      "message": "An error occurred while processing your request."
+    },
+    "unexpected": {
+      "title": "Error",
+      "message": "An unexpected error occurred"
+    }
+  },
+  "enemy": {
+    "loading": "Loading categories and enemies...",
+    "noEnemies": "No enemies in this category",
+    "category": {
+      "loyalists": "Loyalists",
+      "ashwinders": "Ashwinders",
+      "poachers": "Poachers",
+      "trolls": "Trolls",
+      "dugbogs": "Dugbogs",
+      "thornbacks": "Thornbacks",
+      "venomouses": "Venomous Spiders",
+      "mongrels": "Mongrels",
+      "others": "Others"
+    },
+    "name": {
+      "loyalists": {
+        "assassin": "Loyalist Assassin",
+        "commander": "Loyalist Commander",
+        "ranger": "Loyalist Ranger",
+        "sentinel": "Loyalist Sentinel",
+        "warrior": "Loyalist Warrior"
+      }
+    }
   }
 }
